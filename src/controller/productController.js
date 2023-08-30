@@ -6,7 +6,7 @@ exports.createProduct = async (req, res) => {
         const reqBody = req.body;
         const createdProduct = await productModel.create(reqBody);
         res.status(200).json({ status: "success", data: createdProduct });
-        console.log(createdProduct)
+        // console.log(createdProduct)
     } catch (error) {
         res.status(400).json({ status: "fail", data: error });
     }
@@ -14,25 +14,28 @@ exports.createProduct = async (req, res) => {
 
 // R=Read
 exports.readProduct = async (req, res) => {
-    try {
+  try {
       let data = await productModel.aggregate([
-        {
-          $project: {
-            ProductName: 1,
-            ProductCode: 1,
-            Img: 1,
-            UnitPrice: 1,
-            Qty: 1,
-            TotalPrice: 1
+          {
+              $project: {
+                  ProductName: 1,
+                  ProductCode: 1,
+                  Img: 1,
+                  UnitPrice: 1,
+                  Qty: 1,
+                  TotalPrice: 1,
+                  CreatedDate: 1,
+              },
           },
-        },
       ]);
+      // console.log("Read data:", data); 
       res.status(200).json({ status: "success", data: data });
-      // console.log(data)
-    } catch (error) {
+  } catch (error) {
+      // console.error("Read error:", error); 
       res.status(200).json({ status: "fail", error: error });
-    }
-  };
+  }
+};
+
   
 
 // U=Update

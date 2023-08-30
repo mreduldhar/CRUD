@@ -51,6 +51,8 @@ connectToDatabase();
 
  
 
+// Routing Implement
+app.use('/api/v1',router);
 
 
 // Managing Frontend routing
@@ -60,8 +62,6 @@ app.get('*', function(req, res){
 })
 
 
-// Routing Implement
-app.use('/api/v1',router);
 
 module.exports=app;
 
