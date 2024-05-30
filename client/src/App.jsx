@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ReadPage from './pages/ReadPage';
 import CreatePage from './pages/CreatePage';
@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
-    <div>
+    <Fragment>
       <BrowserRouter>
           <Routes>
             <Route path='/' element={<ReadPage/>}/>
@@ -22,7 +22,7 @@ const App = () => {
           </Routes>
       </BrowserRouter>
       <ToastContainer/>
-    </div>
+    </Fragment>
   );
 };
 

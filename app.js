@@ -1,7 +1,7 @@
 const express = require('express');
 const router = require('./src/routes/api');
 const app = new express();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const path = require('path')
 
 // Security Middleware
@@ -27,19 +27,26 @@ app.use(xss());
 app.use(cors());
 
 // Body-Parser
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json())
 
 // Rate limiter
 
-const limiter = rateLimit({windowMs:15*60*1000,max:3000});
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 3000, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests, please try again.'
+});
 app.use(limiter)
 
 // Database Connection
-let URI = "mongodb+srv://<username>:<password>@cluster0.stlyyzv.mongodb.net/CRUD";
-let OPTION = {user:"mredul", pass:"mredul123", autoIndex:true}
+// let URI = "mongodb+srv://<username>:<password>@cluster0.stlyyzv.mongodb.net/CRUD";
+// let OPTION = {user:"mredul", pass:"mredul123", autoIndex:true}
+ let URI = "mongodb+srv://mredul:mredul123@cluster0.efdeb1w.mongodb.net/CRUD";
+
 const connectToDatabase = async () => {
     try {
-        await mongoose.connect(URI, OPTION);
+        await mongoose.connect(URI);
         console.log('Database has been Connected!')
     } catch (error) {
         console.log('Database has not been Connected!', error)
@@ -51,7 +58,7 @@ connectToDatabase();
 
  
 
-// Routing Implement
+// Managing Backend Routing Implement
 app.use('/api/v1',router);
 
 

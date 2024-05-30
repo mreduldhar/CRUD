@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { ErrorToast, SuccessToast, isEmpty } from '../../helper/ValidationHelper';
 import { Create } from './../../API/CRUDApi';
+import FullScreenLoader from '../common/FullScreenLoader';
+
 
 const CreateForm = () => {
 
-    let ProductName, ProductCode, Img, UnitPrice, Qty, TotalPrice = useRef();
+    let ProductName, ProductCode, Img, UnitPrice, Qty, TotalPrice, Loader = useRef();
 
     const SaveData = () => {
        let Product_Name = ProductName.value;
@@ -33,7 +35,9 @@ const CreateForm = () => {
         ErrorToast("Total Price is required")
        }
        else{
+            Loader.classList.remove('d-none')
             Create(Product_Name, Product_Code, Product_Img, Unit_Price, Product_Qty, Total_Price).then((result)=>{
+            Loader.classList.add('d-none')
                 if(result === true){
                     SuccessToast("Data Save Successfully");
                     ProductName.value ="";
@@ -55,40 +59,46 @@ const CreateForm = () => {
     }
 
     return (
-        <div className='container-fluid'>
-            <div className="row">
-                <div className="col-md-4 p-2">
-                    <label>Product Name</label>
-                    <input ref={(input)=>ProductName=input} type="text" className='form-control' />
+        <Fragment>
+            <div className='container-fluid'>
+                <div className="row">
+                    <div className="col-md-4 p-2">
+                        <label>Product Name</label>
+                        <input ref={(input)=>ProductName=input} type="text" className='form-control' />
+                    </div>
+                    <div className="col-md-4 p-2">
+                        <label>Product Code</label>
+                        <input ref={(input)=>ProductCode=input} type="text" className='form-control' />
+                    </div>
+                    <div className="col-md-4 p-2">
+                        <label>Image</label>
+                        <input ref={(input)=>Img=input} type="text" className='form-control' />
+                    </div>
+                    <div className="col-md-4 p-2">
+                        <label>Unit Price</label>
+                        <input ref={(input)=>UnitPrice=input} type="text" className='form-control' />
+                    </div>
+                    <div className="col-md-4 p-2">
+                        <label>Qty</label>
+                        <input ref={(input)=>Qty=input} type="text" className='form-control' />
+                    </div>
+                    <div className="col-md-4 p-2">
+                        <label>Total Price</label>
+                        <input ref={(input)=>TotalPrice=input} type="text" className='form-control' />
+                    </div>
                 </div>
-                <div className="col-md-4 p-2">
-                    <label>Product Code</label>
-                    <input ref={(input)=>ProductCode=input} type="text" className='form-control' />
-                </div>
-                <div className="col-md-4 p-2">
-                    <label>Image</label>
-                    <input ref={(input)=>Img=input} type="text" className='form-control' />
-                </div>
-                <div className="col-md-4 p-2">
-                    <label>Unit Price</label>
-                    <input ref={(input)=>UnitPrice=input} type="text" className='form-control' />
-                </div>
-                <div className="col-md-4 p-2">
-                    <label>Qty</label>
-                    <input ref={(input)=>Qty=input} type="text" className='form-control' />
-                </div>
-                <div className="col-md-4 p-2">
-                    <label>Total Price</label>
-                    <input ref={(input)=>TotalPrice=input} type="text" className='form-control' />
+                <br />
+                <div className="row">
+                    <div className="col-md-4 p-2">
+                        <button onClick={SaveData} className='btn btn-primary w-100'>Save</button>
+                    </div>
                 </div>
             </div>
-            <br />
-            <div className="row">
-                <div className="col-md-4 p-2">
-                    <button onClick={SaveData} className='btn btn-primary w-100'>Save</button>
-                </div>
+            <div className='d-none' ref={(div)=>Loader=div}>
+                <FullScreenLoader/>
             </div>
-        </div>
+
+        </Fragment>
     );
 };
 
