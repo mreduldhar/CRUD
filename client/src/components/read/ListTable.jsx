@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Read } from "../../API/CRUDApi";
+import { Delete, Read } from "../../API/CRUDApi";
 import FullScreenLoader from "../common/FullScreenLoader";
+import { SuccessToast } from "../../helper/ValidationHelper";
+import { withRouter } from "react-router";
 
-const ListTable = () => {
+const ListTable = (props) => {
   const [dataList, setDataList] = useState([]);
+
   useEffect(() => {
     Read().then((result) => {
       setDataList(result);
     });
   }, []);
 
+  const deleteItem = (id) => {
+    Delete(id).then((result) => {
+      if (result === true) {
+        SuccessToast("Item delete successfully.");
+        props.history.push("/");
+      } else {
+        ErrorToast("Request fail, try again.");
+      }
+    });
+  };
+
+  const updateItem = (id) => {
+    props.history.push("/update/" + id);
+  };
+
   if (dataList.length > 0) {
     return (
       <div>
-        <table className="table">
+        <table className="table table-bordered align-items-center">
           <thead>
             <tr>
               <th>Product Name</th>
@@ -31,13 +49,33 @@ const ListTable = () => {
                 <tr key={index}>
                   <td>{item.ProductName}</td>
                   <td>{item.ProductCode}</td>
-                  <td><img className="list-im" src={item.Img} style={{ width: '80px', height: '80px', objectFit: 'cover' }}/></td>
+                  <td>
+                    <img
+                      className="list-im"
+                      src={item.Img}
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </td>
                   <td>{item.UnitPrice}</td>
                   <td>{item.Qty}</td>
                   <td>{item.TotalPrice}</td>
                   <td>
-                    <button>Edit</button>
-                    <button>Delete</button>
+                    <button
+                      onClick={deleteItem.bind(this, item._id)}
+                      className="btn btn-danger mx-1"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={updateItem.bind(this, item._id)}
+                      className="btn btn-primary mx-1"
+                    >
+                      Update
+                    </button>
                   </td>
                 </tr>
               );
@@ -55,4 +93,4 @@ const ListTable = () => {
   }
 };
 
-export default ListTable;
+export default withRouter(ListTable);

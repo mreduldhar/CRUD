@@ -10,6 +10,9 @@ router.post('/create-product', productController.createProduct)
 // R=Read
 router.get('/read-product', productController.readProduct)
 
+// R=ReadById
+router.get('/read-product-by-id/:id', productController.readProductById)
+
 // U=Update
 router.post('/update-product/:id', productController.updateProduct)
 

@@ -12,11 +12,11 @@ export function isEmpty(value){
 }
 
 export function SuccessToast(msg){
-    toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
+    toast.success(msg);
 }
 
 export function ErrorToast(msg){
-    toast.error(msg, { position: toast.POSITION.TOP_RIGHT });
+    toast.error(msg);
 }
 
 

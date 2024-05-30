@@ -49,8 +49,25 @@ export function Read() {
     });
 }
 
-export function Update(id) {
-  let URL = "/api/v1/update-product" + id;
+export function ReadById(id) {
+  let URL = "/api/v1/read-product-by-id/"+id;
+  return axios
+    .get(URL)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.data["data"];
+      } else {
+        return false;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+}
+
+export function Update(id, ProductName, ProductCode, Img, UnitPrice, Qty, TotalPrice) {
+  let URL = "/api/v1/update-product/"+id;
   let PostBody = {
     ProductName: ProductName,
     ProductCode: ProductCode,
@@ -75,7 +92,7 @@ export function Update(id) {
 }
 
 export function Delete(id) {
-  let URL = "/api/v1/delete-product" + id;
+  let URL = "/api/v1/delete-product/" + id;
   return axios
     .delete(URL)
     .then((res) => {
