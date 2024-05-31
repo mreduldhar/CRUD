@@ -6,14 +6,15 @@ import CreatePage from './pages/CreatePage';
 import UpdatePage from './pages/UpdatePage';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 
 
 const App = () => {
   return (
     <Fragment>
             <BrowserRouter>
-            <ToastContainer />
+            <Toaster />
                 <Switch>
                     <Route exact path="/" render={(props)=><ReadPage {...props} key={Date.now()} />}/>
                     <Route exact path="/create" render={(props)=><CreatePage {...props} key={Date.now()} />}/>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = require('./src/routes/api');
 const app = new express();
 const path = require('path')
+require('dotenv').config()
 
 // Security Middleware
 const rateLimit = require('express-rate-limit');
@@ -10,7 +11,6 @@ const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const xss = require('xss-clean');
 const cors = require('cors');
-
 
 // Database lib import
 const mongoose = require('mongoose');
@@ -27,14 +27,12 @@ app.use(express.json())
 // Rate limiter
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 3000,
-   
+    max: 3000  
 });
 app.use(limiter)
 
-
 // Database Connection
- let URI = "mongodb+srv://mredul:mredul123@cluster0.efdeb1w.mongodb.net/CRUD";
+ let URI = process.env.DB_URI;
 
 const connectToDatabase = async () => {
     try {
@@ -49,7 +47,6 @@ connectToDatabase();
 
 // Managing Backend Routing Implement
 app.use('/api/v1',router);
-
 
 // Managing Frontend routing
 app.get('*', function(req, res){

@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast from 'react-hot-toast';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 export function isEmpty(value){
@@ -12,11 +12,11 @@ export function isEmpty(value){
 }
 
 export function SuccessToast(msg){
-    toast.success(msg);
+    toast.success(msg, {position:"top-right"});
 }
 
 export function ErrorToast(msg){
-    toast.error(msg);
+    toast.error(msg, {position:"top-right"});
 }
 
 
