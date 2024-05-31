@@ -6,7 +6,6 @@ import CreatePage from './pages/CreatePage';
 import UpdatePage from './pages/UpdatePage';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
-// import { ToastContainer } from 'react-toastify';
 import { Toaster } from 'react-hot-toast';
 
 

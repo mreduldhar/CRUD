@@ -20,10 +20,10 @@ const ListTable = (props) => {
     Delete(id).then((result) => {
       if (result === true) {
         SuccessToast("Item deleted successfully.");
-        // Refresh the list after deletion
+        // refresh the list after deletion
         Read().then((result) => {
           setDataList(result);
-          // Adjust the current page if the last item of the last page is deleted
+          // adjust the current page if the last item of the last page is deleted
           if (
             currentPage > Math.ceil(result.length / itemsPerPage) &&
             currentPage > 1
